@@ -25,6 +25,8 @@ knexInstance.schema.hasTable('matches').then(function(exists){
     }).then(function(table){
       console.log('Created Table', table);
     });
+  } else {
+    console.log('Table Exists');
   }
 });
 
@@ -49,6 +51,8 @@ knexInstance.schema.hasTable('users').then(function(exists) {
     }).then(function (table) {
       console.log('Created Table', table);
     });
+  } else {
+    console.log('Table exists');
   }
 });
 

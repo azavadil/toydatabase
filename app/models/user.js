@@ -10,5 +10,4 @@ var User = db.Model.extend({
   hasTimestamps: true
 });
 
-
 module.exports = User;

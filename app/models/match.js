@@ -1,6 +1,7 @@
 var db = require('../config');
 var User = require('./user')
 
+
 // Model is a row in the database
 var Match = db.Model.extend({
   tableName: 'matches',
