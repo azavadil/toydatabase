@@ -1,0 +1,9 @@
+A relationship that is multi-valued in both directions is a many-to-many 
+relationship. An breeder can have more than one dog, and a dog can have more 
+than one breeder. 
+
+This type of relationship is helped by the use of a linking table 
+breed__breeder.
+
+A user can have more than one match, a match has two breeders. 
+

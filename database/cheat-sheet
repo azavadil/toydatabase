@@ -1,0 +1,9 @@
+one-to-many
+
+identify the table representing the many side of the relationship and add the 
+primary key of the one side table to it.
+
+So in this instance many dogs belong to one breed therefore we add the field 
+breed_id to the dog table and perform a table join on dog.breed_id = breed.id 
+to retrieve dogs and their corresponding breed.
+

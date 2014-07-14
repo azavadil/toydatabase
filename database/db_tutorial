@@ -1,0 +1,83 @@
+process of creating a database schema is know as normalisation. Think
+up all possible types of data you would like to collect.
+
+first normal form
+
+second normal form
+-no non-key attributes depend on a portion of the primary key. if
+fields in your table are not entirely related to a primary
+key you have more work to do
+
+third normal form
+-no attributes depend on other non-key attributes
+look at your tables and see if more fields exists that can
+be broken down further and that aren't dependent on a key
+
+one to many
+identify the table representing the many side of the relationship
+and add the primary key of the one side table to it
+
+many mataches belong to one user, therefore we add the field
+user_id to the matches.
+does this make sense? do we have a matches table for every user?
+
+would we have user.match_id = match.id?
+
+many to many:
+a relationship that is multi-valued in both directions. A breeder
+can have more than one dog and a dog can have more than one breeder
+
+
+first create a table for our matches, insert some matches, then 
+create a linking table called users__matches
+
+How is this going to work. A user sends a like and we add the like
+to the likes table. a like will need an initiator id and a target id.
+then we want all likes where recipient id equals target id and 
+target id equals recipient id
+
+we could do this with an in memory hash table
+or memcache
+or do we have a separate table for each event? 
+
+likes[initiator] ={}
+likes[initiator][target] = true
+
+when we get a new like in we can check in constant time
+if likes[target][initiator](
+  // https://github.com/account
+  addToMatchesTable();
+) else {
+  likes[initial][target] = true;
+}
+
+or with a likes table
+
+we have an newInitiatorId and a newTargetId
+
+select * from likesTable
+WHERE newInitiatorId = targetId
+AND newTargetId = initiatorId
+
+if we get a result, then we add to the matches table
+otherwise we insert into the likes table
+since we check at each insert we'll get all matches.
+
+each match is going to have two user ids
+
+a match has two users and a user can have more than
+
+match_id, user_id_0, user_id_1
+
+CREATE TABLE matches
+(
+  id int(11) NOT NUll auto_increment
+  user_id_0 varchar(255),
+  user_id_1 varchar(255)
+)
+
+INSERT INTO breeder (user_id_0, user_id_1) 
+VALUES 
+)
+
+
