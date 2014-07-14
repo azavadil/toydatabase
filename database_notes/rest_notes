@@ -1,0 +1,179 @@
+web based on 3 technologies
+url naming
+HTTP protocol
+HTML document format
+
+example of www.youtypeitwepostit.com
+
+alice posts to http://www.youtypeitwepostit.com
+
+alice's web browser is about to send an HTTP request to a web server
+web server may host many URLs
+URL: we say a URL is a URL of some thing: a product, user, home page
+     the technical term for the thing is resource. 
+
+when a web browser sends and HTTP request for a resource, the server sends a
+document in response (usually an HTML document but sometimes a binary image
+or something else). Whatever document the server send we call that document
+a representation of the resource. 
+
+So each URL identifies a resource. When a client makes and HTTP request to
+a URL it gets a representation of the underlying resource. The client
+never sees the resource directly.
+
+Addressability: A URL identifies one and only one resource. If a website has
+2 conceptually different things on it we expect the site to treat them as
+two resources with different URLs (e.g. failure: restuarnt that buries
+menu in Flash interface)
+
+Alice make an HTTP GET request for '/messages' that means 'give me a 
+representation of this resource'. Server handles the GET request by sending
+a representation of /messages
+resource: messages
+representation: HTTP response
+
+HTTP: defined 8 methods a client can apply to a resource:
+Focus on 5: GET, HEAD, POST, PUT, DELETE (6th PATCH) 
+
+Alice sends a post. Receives a the following from the server
+HTTP/1.1 303 See Other
+Content-type: text/html
+Location: http://www.youtypeitwepostit.com/messages/5566722
+
+When Alice's browser made GET request the server sent an HTTP status code
+200 ("OK").  There's no HTML document here but the server did provide a link
+to another URL in the location header. 303 tells Alice's browser to 
+automatically make a fourth HTTP request to the URL given in the Location
+header.
+
+The server manages two resources. Home page (served from /) and the message
+list (served from /messages)
+
+hypermedia as the engine of application state (the "HATEOAS")
+
+application state: which web page a client is on.
+hypermedia: general term for things like HTML links and forms
+
+to say that hypermedia is the engine of application state is to say that
+we all navigate the web by filling out forms and following links
+
+mistakes:
+-don't tell people how to build urls in english prose
+-don't have a file system type menu, 
+
+challenge: how can we program the computer to make decisions about which
+           links to click. 
+
+semantic challenge: bridging the semantic gap between understanding a documents 
+           structure and understanding what it means.
+
+
+Chap 2:
+The ideal API would have the same characteristics that make the WWW easy to
+use. You would be able to figure out how to use it with nothing but a URL
+
+Fantasy:
+computer client would make a GET request for the URL
+client would take over from there to see the available options.
+it would follow links, fill out forms, and eventually accomplish the task
+
+How to explore an API:
+
+$  wget -S -O http://www.youtypeitwepostit/api
+
+-S (print out full response)
+-O (print out document instead of saving to file)
+
+Read and HTTP response:
+
+HTTP/1.1 200 OK
+ETag: "f60e0978bc9c458989815b18ddad6d75"
+Last-Modified: Thu, 10 Jan 2013 01:45:22 GMT
+Content-Type: application/vnd.collection+json
+
+status code:
+body:
+response headers: the most important response header is the content type
+                  which tells the HTTP client how to understand the entity
+                  body.
+                  We say the value of the Content-Type header is the entity
+                  body's media time (also the MIME type or content type)
+
+Content-Type: application/vnd.collection+json
+
+The JSON RFC says that a JSON document should be served as application/json.
+Here we have vnd.collection+json
+
+vnd.collection.json is a collection type. Standard for publishing a searchable
+list of resources. Colletion + JSON is a way of serving lists
+http://amundsen.com/media-types/collection/
+
+when a client makes a POST request to create a new resource it sends a 
+representation: the clients idea of what the new resource should look like.
+The server's job is to create that resource, or else refuse to create it.
+The client's represenation is just a suggestion. The server may add to,
+alter, or ignore any part of it.
+
+Resources can have many representations:
+each document can be served in json or xml
+two ways to handle
+1. content negotiation: client distinguishes the content type based
+   headers
+2. get the resource multiple urls
+
+GET
+DELETE
+POST: most common response code is 201 (created)
+      202(Accepted, returned before db insert returns)
+
+PUT
+PATCH: modify part of the state
+
+PUT: client takes the representation it got from a GET, modifies it, and
+     then sends it back as the payload of a PUT request
+
+PATCH: you create a special diff representation and send the diff
+       to the server as the payload of a PATCH
+       response codes 200(OK), 204(No Content) to indicate success
+
+GET, POST, PUT, DELETE, PATCH
+
+hypermedia: way for server to tell the client what HTTP requests
+the client might want to make in the future. Its a menu provided by the 
+server from which the client is free to choose
+
+<form action="http://www.youtypeit.com/messages" method="post">
+  <input type="text" name="message" value="" require="true" />
+  <input type="submit" value="Post" />
+</form>
+
+Content-Type for forms: application/x-www-form-urlencoded
+
+URLs generated by <form> tag
+
+http://www.youtypeit.com/messages/?search=rest
+
+<form method="GET" action="http://www.youtypeit.com/messages/">
+<input type="text" id="query" name="query"/>
+<input type="submit" name="Search"/>
+</form>
+
+exactly equivalent to
+http://www.youtypeit.com/messages/?query={query}, and
+http://www.youtypeit.com/messages/{?query}, and
+
+Hypermedia controls have three jobs
+1.how to construct an HTTP request
+ -method
+ -url
+ -headers
+2.make promises about the response
+3.sugget
+
+HTTP request has 4 parts
+-method
+-target URL
+-HTTP headers
+-entity body
+
+
