@@ -4,7 +4,7 @@ var knex = require('knex');
 var knexInstance = knex({
   client: 'sqlite3',
   connection: {
-    filename: path.join(__dirname, './db/testbd.sqlite')
+    filename: path.join(__dirname, './db/testdb.sqlite')
   }
 });
 
@@ -43,11 +43,26 @@ knexInstance.schema.hasTable('users').then(function(exists) {
   if (!exists) {
     knexInstance.schema.createTable('users', function (user) {
       user.string('fb_id', 100).primary();
+      user.string('access_token', 255);
       user.string('username', 100).unique();
       user.string('description', 143);
       user.boolean('is_male');
       user.integer('age');
       user.timestamps();
+    }).then(function (table) {
+      console.log('Created Table', table);
+    });
+  } else {
+    console.log('Table exists');
+  }
+});
+
+knexInstance.schema.hasTable('matches_users').then(function(exists) {
+  if (!exists) {
+    knexInstance.schema.createTable('matches_users', function (matches_users) {
+      matches_users.increments('id').primary();
+      matches_users.integer('matches_id').unique().references('matches.id');
+      matches_users.string('users_id', 100).unique().references('users.fb_id');
     }).then(function (table) {
       console.log('Created Table', table);
     });

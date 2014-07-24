@@ -7,11 +7,11 @@ var Match = db.Model.extend({
   tableName: 'matches',
   hasTimestamps: true,
   users: function(){
-    return this.belongsToMany(User);
+    return this.belongsToMany(User, 'matches_users', 'matches_id','users_id');
   },
   initialize: function(){
     //any initialize code goes here
   }
 });
 
-module.exports = Match;
+module.exports = Bookshelf.model('Match', Match);

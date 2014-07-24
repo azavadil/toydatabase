@@ -1,0 +1,5 @@
+belongsToMany
+
+current models is joined to one or more of a Target model through another table
+the default name for the joining table is the two table names joined by an
+underscore, ordered alphabetically

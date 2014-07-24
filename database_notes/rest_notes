@@ -176,4 +176,27 @@ HTTP request has 4 parts
 -HTTP headers
 -entity body
 
+ordinarily the entity-body of an HTML POST form is form-encoded and sent over
+the network with the Content-Type header set to application/x-www-form-urlencoded
+
+specifying th enctype attribute of the <form> tag overrides this behaviour.
+A form with enctype="text/plain" tells the browser to encode the entity-body
+in plain text
+
+Hypermedia controls can describe an HTTP request in great detail. It can 
+instruct the client to send an HTTP request to a specific URL, using a 
+specific HTTP method, providing an entity-body constructed according to
+specific rules, and providing specific values for specific HTTP headers.
+
+<link rel="edit" href="http://example.org/posts/1"/>
+
+rel="edit" says the resource supports PUT and DELETE as well as GET
+you'll get a Member Entry (e.g. application/atom+xml)
+
+use a media type that has real support for hypermedia
+
+
+application/vnd.amundsen.maze+xml
+
+
 
