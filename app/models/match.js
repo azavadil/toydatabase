@@ -1,17 +1,15 @@
-var db = require('../config');
+var bookshelf = require('../config').bookshelf;
 var User = require('./user')
 
 
 // Model is a row in the database
-var Match = db.Model.extend({
+var Match = bookshelf.Model.extend({
   tableName: 'matches',
   hasTimestamps: true,
-  users: function(){
-    return this.belongsToMany(User, 'matches_users', 'matches_id','users_id');
-  },
-  initialize: function(){
-    //any initialize code goes here
+  matches: function(){
+    this.belongsToMany(User,'matches', 'fb_id', 'user_0_id')
   }
-});
+}); 
 
-module.exports = Bookshelf.model('Match', Match);
+module.exports = bookshelf.model('Match',Match);
+

@@ -1,8 +1,8 @@
 // NOTE: this file is not needed when using MongoDB
-var db = require('../config');
+var bookshelf = require('../config').bookshelf;
 var User = require('../models/user');
 
-var Users = new db.Collection();
+var Users = new bookshelf.Collection();
 
 Users.model = User;
 

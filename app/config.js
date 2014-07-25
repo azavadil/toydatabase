@@ -57,20 +57,22 @@ knexInstance.schema.hasTable('users').then(function(exists) {
   }
 });
 
-knexInstance.schema.hasTable('matches_users').then(function(exists) {
-  if (!exists) {
-    knexInstance.schema.createTable('matches_users', function (matches_users) {
-      matches_users.increments('id').primary();
-      matches_users.integer('matches_id').unique().references('matches.id');
-      matches_users.string('users_id', 100).unique().references('users.fb_id');
-    }).then(function (table) {
-      console.log('Created Table', table);
-    });
-  } else {
-    console.log('Table exists');
-  }
-});
+// knexInstance.schema.hasTable('matches_users').then(function(exists) {
+//   if (!exists) {
+//     knexInstance.schema.createTable('matches_users', function (matches_users) {
+//       matches_users.increments('matches_users_id').primary();
+//       matches_users.integer('matches_id').references('matches.id');
+//       matches_users.string('users_id', 100).unique().references('users.fb_id');
+//     }).then(function (table) {
+//       console.log('Created Table', table);
+//     });
+//   } else {
+//     console.log('Table exists');
+//   }
+// });
 
 var bookshelf = require('bookshelf')(knexInstance);
+bookshelf.plugin('registry');
 
-module.exports = bookshelf;
+module.exports.knex = knex;
+module.exports.bookshelf = bookshelf;

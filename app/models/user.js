@@ -1,13 +1,13 @@
-var db = require('../config');
+var bookshelf = require('../config').bookshelf;
 var Promise = require('bluebird');
 var Match = require('./match');
 
-var User = db.Model.extend({
+var User = bookshelf.Model.extend({
   tableName: 'users',
   matches: function(){
-    return this.belongsToMany(Match, 'matches_users', 'users_id', 'matches_id');
+    return this.hasMany(User).through(Match);
   },
   hasTimestamps: true
 });
 
-module.exports = Bookshelf.model('User', User);
+module.exports = bookshelf.model('User', User)
